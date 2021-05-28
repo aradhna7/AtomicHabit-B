@@ -12,6 +12,20 @@ connectDB();
 app.use(express.json({ extended:false }));
 app.use(cors());
 
+var multer = require('multer');
+ 
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+ 
+var upload = multer({ storage: storage });
+
+
 app.get('/', (req, res) => res.send('API Running'));
 
 //DEFINE ROUTES
